@@ -1,0 +1,11 @@
+user_question_id,question,system,language
+1,What is your mother's maiden name?,1,en
+2,What was the name of your Grade 1 teacher?,1,en
+3,What was the make and model of your first car?,1,en
+4,In what city was your father born?,1,en
+5,What was the name of your first pet?,1,en
+6,French:What is your mother's maiden name?,1,fr
+7,French:What was the name of your Grade 1 teacher?,1,fr
+8,French:What was the make and model of your first car?,1,fr
+9,French:In what city was your father born?,1,fr
+10,French:What was the name of your first pet?,1,fr

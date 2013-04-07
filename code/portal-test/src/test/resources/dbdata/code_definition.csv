@@ -1,0 +1,14 @@
+code_definition_id,table_name,column_name,code,represent_name,description
+1,web_user,web_state,0,active,"active means normal? we assume this now."
+2,web_user,web_state,1,dormant,"dormant, means not login for 4 month? this logic can be implemented by check last login time."
+3,web_user,login_state,0,active,"account is in normal state"
+4,web_user,login_state,1,locked,"login_state_locked, will occur in such situation: when user have failed to authentic for 6 times."
+5,web_user,login_state,2,account_expired,"login_state_account_expired, account is expired. no this logic in application now."
+6,web_user,login_state,3,password_expired,"login_state_password_expired, password is expired. no this logic in application now."
+7,web_user,web_password,a123456,dc483e80a7a0bd9ef71d8cf973673924,md5value
+8,web_user,web_password,b123456,8df32286deed62bae5bf746672805c78,md5value
+9,web_user,web_password,c123456,ad07fb25aa2d3a9f96ee12f25e0be902,md5value
+10,web_user,web_password,d123456,adf00707a1c0154a9ad8edb57c8646f4,md5value
+11,web_user,web_password,e123456,a115a58e6c40da1887f9c5072ba14a37,md5value
+12,web_user,web_password,f123456,3a4e936cd3cdbe3d5a40e04e91a883cb,md5value
+13,web_user,login_state,4,temporary_password,"the password should be updated once user login."

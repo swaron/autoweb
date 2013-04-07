@@ -1,0 +1,150 @@
+## Display all queued Struts errors
+#macro (errorMarkup)
+    #if ($errors.exist() )
+        <ul>
+        #foreach ($e in $errors.all )
+            $e
+        #end
+        </ul>
+    #end
+#end
+
+## Display all queued Struts errors for a particular property
+#macro (errorMarkupForProperty $property)
+    #if ($errors.exist($property) )
+        <ul>
+        #foreach ($er in $errors.get($property))
+            $er
+        #end
+        </ul>
+    #end
+#end
+
+## Display all queued Struts errors
+#macro (messageMarkup)
+    #if ($messages.exist() )
+        <ul>
+        #foreach ($m in $messages.all )
+            $m
+        #end
+        </ul>
+    #end
+#end
+
+## Display all queued Struts action messages for a particular property
+#macro (messageMarkupForProperty $property)
+    #if ($messages.exist($property) )
+        <ul>
+        #foreach ($m in $messages.get($property))
+            $m
+        #end
+        </ul>
+    #end
+#end
+
+--- NEW FILE: expresso_global_library.vm ---
+#*
+ * A Velocity global macros library file that supports Expresso development.
+ * These macros require com.jcorporate.expresso.ext.velocity.ExpressoTool to
+ * be installed as a velocity tool named expresso.  In the toolbox.xml file
+ * specify the following:
+ *
+ * <tool>
+ *   <key>expresso</key>
+ *   <class>com.jcorporate.expresso.ext.velocity.ExpressoTool</class>
+ * </tool>
+ * 
+ * @author David Lloyd (david at lloydhome.com)
+ *
+ * $Log: expresso_global_library.vm,v $
+ * Revision 1.1  2004/05/29 17:02:07  dlloyd
+ * Initial velocity support.
+ *
+ *
+ *#
+
+#*
+ * Get a string from schema resources
+ * //TODO: Specify schema getString needs implementation
+ *#
+#macro( exp_string $code )
+  #if( $controllerResponse )
+    $expresso.getString($controllerResponse, $code, null)
+  #elseif( $currentSchema )
+  #end
+#end
+
+#*
+ * Get a string from schema resources - supplying replacement arguments
+ *#
+#macro( exp_string $code $args)
+  #if( $controllerResponse )
+    $expresso.getString($controllerResponse, $code, $args)
+  #elseif( $currentSchema )
+  #end
+#end
+
+#*
+ * Get a ControllerElement in the path relative to the root
+ *
+ * Example: #exp_element( $myelement "lists/groups/tests" )  
+ *                   returns the element named 'tests'
+ * Example: #exp_element( $myelement "lists/groups/@style" ) 
+ *                   returns the string for attribute 'style' in 'groups'
+ *#
+#macro( exp_element $var $path )
+  #set( $$$var = $expresso.getElement($controllerResponse, $path) )
+#end
+
+#*
+ * Get a ControllerElement in the path relative to the supplied element.
+ * A leading / will make it relative to the root
+ *#
+#macro( exp_elementFrom $var $from $path )
+  #set( $$$var = $expresso.getElementFrom($controllerResponse, $from, $path) )
+#end
+
+#*
+ * Get the content item inside an element.  Uses the exp_elementFrom to find the element.
+ *#
+#macro( exp_content $var $from $path )
+  #set( $$$var = $expresso.getElementFrom($controllerResponse, $from, $path).content )
+#end
+
+#*
+ * Print the content item inside an element.
+ *#
+#macro( exp_printContent $from $path )
+  #set( $var = $expresso.getElementFrom($controllerResponse, $from, $path) )
+$var.content
+#end
+
+#*
+ * Setup the standard environment.
+ *#
+#macro( exp_standard )
+  #if( (! $db) || $db == "" )
+    #set( $db = "default" )
+  #end
+
+  #set( $configManager = $expresso.getConfigManager() )
+
+  #set( $imagesDir = $configManager.getContext($db).getImages() )
+  #set( $contextPath = $expresso.getSetupValue($db, "ContextPath") )
+
+  #if ( (! $contextPath) )
+    #set( $contextPath = $request.contextPath )
+  #end
+
+  #set( $expressoDir = $configManager.getContext($db).getExpressoDir() )
+  #if ( (! $expressoDir) )
+    #set( $expressoDir = "/expresso" )
+  #end
+
+  #set( $expressoContextPath = "$contextPath/$expressoDir" )
+  #if ( (! $expressoContextPath) )
+    #set( $expressoContextPath = "" )
+  #end
+#end
+
+

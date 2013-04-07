@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+">
+	<changeSet id="115" author="total" context="test">
+		<sql endDelimiter=";">
+		<![CDATA[
+			DROP TABLE IF EXISTS code_definition CASCADE;
+			DROP TABLE IF EXISTS system_config CASCADE;
+			DROP TABLE IF EXISTS password_history CASCADE;
+			DROP TABLE IF EXISTS audit_log CASCADE;
+			DROP TABLE IF EXISTS audit_type CASCADE;
+			DROP TABLE IF EXISTS user_info CASCADE;
+			DROP TABLE IF EXISTS crm_member_info CASCADE;
+			DROP TABLE IF EXISTS kroll_work_order CASCADE;
+			DROP TABLE IF EXISTS crm_case CASCADE;
+			
+			DROP TABLE IF EXISTS candidate_Addresses CASCADE;
+			DROP TABLE IF EXISTS candidate_addresses CASCADE;
+			
+			DROP TABLE IF EXISTS web_user CASCADE;
+			DROP TABLE IF EXISTS user_question CASCADE;
+			DROP TABLE IF EXISTS code_dict CASCADE;
+			DROP TABLE IF EXISTS location CASCADE;
+			DROP TABLE IF EXISTS location_setting CASCADE;
+			DROP TABLE IF EXISTS crm_queue CASCADE;
+		]]>
+		</sql>
+		<createTable tableName="code_definition">
+			<column name="code_definition_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="table_name" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="column_name" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="code" type="varchar(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="represent_name" type="varchar(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="varchar(512)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="code_dict">
+			<column name="code_dict_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="language" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="code_type" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="code_name" type="varchar(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="code_value" type="varchar(32)">
+				<constraints nullable="false" />
+			</column>
+			<column name="order_order" type="varchar(512)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint tableName="code_definition" columnNames="table_name,column_name,code"
+			constraintName="code_definition_uk_1" />
+
+		<createTable tableName="user_question">
+			<column name="user_question_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="question" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="system" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="language" type="char(5)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="web_user">
+			<column name="web_user_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="crm_member_id" type="varchar(36)" defaultValue="">
+				<constraints nullable="false" />
+			</column>
+			<column name="web_password" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="email" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_login_time" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="last_last_login_time" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="locked_time" type="datetime" />
+			<column name="update_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_by" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="login_failed_count" type="smallint" defaultValueNumeric="0">
+				<constraints nullable="false" />
+			</column>
+			<column name="login_state" type="smallint" />
+			<column name="login_id" type="varchar(100)">
+				<constraints nullable="false" uniqueConstraintName="web_user_uk_1" unique="true" />
+			</column>
+			<column name="user_question_id" type="int">
+				<constraints nullable="true" foreignKeyName="web_user_fk_1" references="user_question(user_question_id)" />
+			</column>
+			<column name="user_question_answer" type="varchar(1024)">
+				<constraints nullable="true" />
+			</column>
+			<column name="locale" type="varchar(8)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createTable tableName="crm_member_info">
+			<column name="crm_member_info_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="crm_member_num" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="web_user_id" type="int">
+				<constraints nullable="true" foreignKeyName="crm_member_info_fk_1" references="web_user(web_user_id)" />
+			</column>
+			<column name="kroll_instance_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="kroll_patient_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="salutation" type="varchar(16)">
+				<constraints nullable="true" />
+			</column>
+			<column name="province_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="benefit_group_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="benefit_sub_group_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="plan_sponsor_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="plan_client_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="first_name" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="last_name" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="birthday" type="date">
+				<constraints nullable="true" />
+			</column>
+			<column name="update_by" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="update_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="temporary_address" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="temporary_address_start_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="temporary_address_end_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="kroll_work_order">
+			<column name="kroll_work_order_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="web_user_id" type="int">
+				<constraints nullable="true" foreignKeyName="kroll_work_order_fk_1" references="web_user(web_user_id)" />
+			</column>
+			<column name="work_order_type" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="patient_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="rx_num" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="subject" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="kroll_instance_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="work_order_status" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="delivery_status" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="rx_status" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="billing_status" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="create_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="crm_case">
+			<column name="crm_case_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="web_user_id" type="int">
+				<constraints nullable="true" foreignKeyName="crm_case_fk_1" references="web_user(web_user_id)" />
+			</column>
+			<column name="incident_id" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="title" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="customer_id" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="case_origin_code" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="case_type_code" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="esi_member_request_date" type="datetime">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="varchar(2000)">
+				<constraints nullable="true" />
+			</column>
+			<column name="crm_queue_num" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state_code" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="source_data" type="varchar(2000)">
+				<constraints nullable="true" />
+			</column>
+			<column name="portal_case_type" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createTable tableName="audit_type">
+			<column name="audit_type_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="audit_component_type" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="audit_actor_type" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="audit_function_type" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_by" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="audit_log">
+			<column name="audit_log_id" type="bigint" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="audit_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="session_id" type="varchar(50)">
+				<constraints nullable="true" />
+			</column>
+			<column name="update_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_by" type="varchar(64)">
+				<constraints nullable="true" />
+			</column>
+			<column name="audit_xml_data" type="varchar(8192)" />
+			<column name="audit_type_id" type="int">
+				<constraints nullable="false" foreignKeyName="audit_log_fk_2" references="audit_type(audit_type_id)" />
+			</column>
+			<column name="ip_address" type="varchar(40)" />
+		</createTable>
+		<createTable tableName="password_history">
+			<column name="password_history_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="web_user_id" type="int">
+				<constraints nullable="false" foreignKeyName="password_history_fk_1" references="web_user(web_user_id)" />
+			</column>
+			<column name="web_password" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_time" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_by" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="system_config">
+			<column name="system_config_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="param_key" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="param_value" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_time" type="datetime" />
+			<column name="update_by" type="varchar(32)" />
+		</createTable>
+		<createTable tableName="crm_queue">
+			<column name="crm_queue_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="crm_queue_num" type="varchar(64)">
+				<constraints nullable="false" unique="true"/>
+			</column>
+			<column name="crm_queue_name" type="varchar(64)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="location">
+			<column name="location_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="crm_location_num" type="varchar(64)">
+				<constraints nullable="false" unique="false" />
+			</column>
+			<column name="location_name" type="varchar(64)" defaultValue="">
+				<constraints nullable="false" />
+			</column>
+			<column name="location_province_abbr" type="varchar(32)">
+				<constraints nullable="true" />
+			</column>
+			<column name="parent_location_num" type="varchar(64)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="language" type="char(5)">
+				<constraints nullable="false" />
+			</column>
+			<column name="crm_queue_id" type="int">
+				<constraints nullable="false" foreignKeyName="location_fk_1" references="crm_queue(crm_queue_id)" />
+			</column>
+		</createTable>
+		<createTable tableName="location_setting">
+			<column name="location_setting_id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="province" type="varchar(32)">
+				<constraints nullable="true" />
+			</column>
+			<column name="agent" type="boolean" defaultValue="false">
+				<constraints nullable="false" />
+			</column>
+			<column name="legal_age" type="int">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<loadData tableName="user_question" file="dbdata/user_question.csv"></loadData>
+		<loadData tableName="web_user" file="dbdata/web_user.csv"></loadData>
+		<loadData tableName="code_definition" file="dbdata/code_definition.csv"></loadData>
+		<loadData tableName="audit_type" file="dbdata/audit_type.csv"></loadData>
+		<loadData tableName="crm_queue" file="dbdata/queue.csv"></loadData>
+		<loadData tableName="location" file="dbdata/location.csv"></loadData>
+		<loadData tableName="location_setting" file="dbdata/location_setting.csv"></loadData>
+	</changeSet>
+</databaseChangeLog>

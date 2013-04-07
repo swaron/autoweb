@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<bean id="dataSource_datafactory" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>${datafactory.jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${datafactory.jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${datafactory.jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${datafactory.jdbc.password}</value>
+		</property>
+	</bean>
+	<bean id="dataSource_easylife" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>${easylife.jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${easylife.jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${easylife.jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${easylife.jdbc.password}</value>
+		</property>
+	</bean>
+</beans>

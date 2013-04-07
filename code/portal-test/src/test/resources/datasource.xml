@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+	<bean id="dataSource_webportal" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>${webportal.jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${webportal.jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${webportal.jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${webportal.jdbc.password}</value>
+		</property>
+	</bean>
+	<bean id="dataSource_crm" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>${crm.jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${crm.jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${crm.jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${crm.jdbc.password}</value>
+		</property>
+	</bean>
+</beans>

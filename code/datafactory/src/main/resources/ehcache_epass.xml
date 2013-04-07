@@ -1,0 +1,18 @@
+<ehcache updateCheck="false" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+	<diskStore path="java.io.tmpdir\ehcache_epass\datafactory" />
+	<defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="240"
+		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="mobile_num" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+	<cache name="ip_by_location" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="2400"
+		overflowToDisk="true" maxElementsOnDisk="100000" diskPersistent="false" diskExpiryThreadIntervalSeconds="1200"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+	<cache name="china_ip" maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="3600"
+		overflowToDisk="false" diskPersistent="false" memoryStoreEvictionPolicy="LRU">
+	</cache>
+</ehcache>
