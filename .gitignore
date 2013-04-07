@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+
+!.gitignore
+.*
+target/
+.settings/
+/private
